@@ -11,7 +11,6 @@ public class R08_VNA00_J {
     public static void main(String[] args) {
   
 
-      
     }
 
     /*
@@ -23,7 +22,7 @@ public class R08_VNA00_J {
      */
 
     final static class ControlledStop implements Runnable {
-      private boolean done = false;
+      private volatile boolean done = false;
       
       @Override public void run() {
         while (!done) {
