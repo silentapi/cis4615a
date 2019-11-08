@@ -1,6 +1,16 @@
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
+import java.util.HashSet;
+import java.util.Set;
+import java.nio.file.Path;
 
 /******************************************************************************
  * Compilation: javac R13_FIO01_J.java Execution: java R13_FIO01_J
@@ -13,8 +23,23 @@ public class R13_FIO01_J {
 
   public static void main(String[] args) throws IOException {
 	
-      Writer out = new FileWriter("file");
-      
+    Path file = new File("file").toPath();
+ 
+    // Throw exception rather than overwrite existing file
+    Set<OpenOption> options = new HashSet<OpenOption>();
+    options.add(StandardOpenOption.CREATE_NEW);
+    options.add(StandardOpenOption.APPEND);
+     
+    // File permissions should be such that only user may read/write file
+    Set<PosixFilePermission> perms =
+        PosixFilePermissions.fromString("rw-------");
+    FileAttribute<Set<PosixFilePermission>> attr =
+        PosixFilePermissions.asFileAttribute(perms);
+     
+    try (SeekableByteChannel sbc =
+             Files.newByteChannel(file, options, attr)) {
+      // Write data
+    };      
     }
 
     /*
