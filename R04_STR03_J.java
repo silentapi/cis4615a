@@ -12,10 +12,10 @@ public class R04_STR03_J {
     public static void main(String[] args) {
 	
       BigInteger a = new BigInteger("530500452766");
-      byte[] byteArray = a.toByteArray();
-      String s = new String(byteArray);
-      byteArray = s.getBytes();
-      BigInteger b = new BigInteger(byteArray);
+      String s = a.toString();  // Valid character data
+      byte[] byteArray = s.getBytes();
+      String ns = new String(byteArray); 
+      BigInteger b = new BigInteger(ns);
       System.out.println("a = " + a);
       System.out.println("b = " + b);
       
