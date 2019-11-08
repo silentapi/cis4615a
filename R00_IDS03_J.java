@@ -1,12 +1,12 @@
-import java.util.logging.Logger;
-
-/******************************************************************************
- *  Compilation:  javac R03_IDS03_J.java
+/* ************ ********************** Compilatio javac R03_IDS03_J.java
  *  Execution:    java R03_IDS03_J
- *
+ * 
  *  Logs usernames for login attempts for both valid and illegal usernames
  *
  ******************************************************************************/
+
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class R00_IDS03_J {
 
@@ -17,9 +17,9 @@ public class R00_IDS03_J {
       String username = "guest";
 
       if (loginSuccessful) {
-        logger.severe("User login succeeded for: " + username);
+        logger.severe("User login succeeded for: " + sanitizeUser(username));
       } else {
-        logger.severe("User login failed for: " + username);
+        logger.severe("User login failed for: " + sanitizeUser(username));
       }
       
       username = "guest\n" +
@@ -27,9 +27,9 @@ public class R00_IDS03_J {
                  "SEVERE: User login succeeded for: administrator;";
 
       if (loginSuccessful) {
-        logger.severe("User login succeeded for: " + username);
+        logger.severe("User login succeeded for: " + sanitizeUser(username));
       } else {
-        logger.severe("User login failed for: " + username);
+        logger.severe("User login failed for: " + sanitizeUser(username));
       }
     
     }
@@ -40,4 +40,8 @@ public class R00_IDS03_J {
      * https://wiki.sei.cmu.edu/confluence/display/java/IDS03-J.+Do+not+log+unsanitized+user+input     *
      *Rule 00-IDS03
      */
+
+    public static String sanitizeUser(String username) {
+      return Pattern.matches("[A-Za-z0-9_]+", username) ? username : "unauthorized user";
+    }
 }
